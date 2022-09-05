@@ -1,15 +1,18 @@
 import React from "react";
+import HeadBar from "./HeadBar";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
     <>
-      <div className="py-8 mb-10 bg-gray-800 flex justify-center text-white items-center">
-        <h1 className="text-6xl font-bold">My Tasks Organizer</h1>
-      </div>
+      <HeadBar />
       <div className="flex justify-center  mb-10">
-        <button className="px-5 py-4 text-2xl rounded-lg  bg-blue-600 text-white hover:bg-blue-700 hover:shadow-md">
+        <Link
+          to="/new"
+          className="px-5 py-4 text-xl rounded-lg  bg-blue-600 text-white hover:bg-blue-700 hover:shadow-md"
+        >
           + Add New Task
-        </button>
+        </Link>
       </div>
       <div className="mx-auto shadow-lg w-6/12 bg-gray-50 mb-10 px-16 py-10 rounded-lg">
         <div className="flex justify-end ">
