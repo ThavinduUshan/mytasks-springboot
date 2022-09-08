@@ -1,13 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
 import HeadBar from "./HeadBar";
 import { Link } from "react-router-dom";
 
 const AddTask = () => {
+  const [task, setTask] = useState({
+    tname: "",
+    tdescription: "",
+    endDate: "",
+    endTime: "",
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios
+      .post("http://localhost:8080/new", task, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        console.log(res);
+      });
+  };
+
   return (
     <>
       <HeadBar />
 
-      <form className="w-5/12 mt-10 mx-auto">
+      <form onSubmit={handleSubmit} className="w-5/12 mt-10 mx-auto">
         <Link to="/">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -36,6 +57,13 @@ const AddTask = () => {
             type="text"
             id="tname"
             className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
+            value={task.tname}
+            onChange={(e) =>
+              setTask({
+                ...task,
+                tname: e.target.value,
+              })
+            }
             required
           />
         </div>
@@ -51,6 +79,13 @@ const AddTask = () => {
             name="tmessage"
             rows="4"
             class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
+            value={task.tdescription}
+            onChange={(e) =>
+              setTask({
+                ...task,
+                tdescription: e.target.value,
+              })
+            }
           ></textarea>
         </div>
         <div className="mb-10">
@@ -63,15 +98,43 @@ const AddTask = () => {
           <input
             type="date"
             id="tendDate"
-            value={""}
             className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+            value={task.endDate}
+            onChange={(e) =>
+              setTask({
+                ...task,
+                endDate: e.target.value,
+              })
+            }
+            required
+          />
+        </div>
+
+        <div className="mb-10">
+          <label
+            for="tendDate"
+            className="block mb-2 text-sm font-medium text-gray-900 "
+          >
+            Pick the Time :
+          </label>
+          <input
+            type="time"
+            id="tendDate"
+            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+            value={task.endTime}
+            onChange={(e) =>
+              setTask({
+                ...task,
+                endTime: e.target.value,
+              })
+            }
             required
           />
         </div>
 
         <button
           type="submit"
-          className="text-white bg-gray-800 hover:bg-white hover:text-gray-800 hover:border hover:border-gray-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-md px-5 py-3 text-center "
+          className="mb-10 text-white bg-gray-800 hover:bg-white hover:text-gray-800 hover:border hover:border-gray-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-md px-5 py-3 text-center "
         >
           Add New Task
         </button>
